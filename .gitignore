@@ -1,13 +1,11 @@
 # ==========================================
 # Environments, Secrets & API Keys
 # ==========================================
-.env
-.env.*
-!.env.example
-safe.env
-safe.ene
+.env*
+*.env*
+safe.env*
+safe.ene*
 *.ene
-*.env
 *.key
 *.pem
 *.cert
