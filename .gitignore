@@ -1,0 +1,66 @@
+# ==========================================
+# Environments, Secrets & API Keys
+# ==========================================
+.env
+.env.*
+!.env.example
+safe.env
+safe.ene
+*.ene
+*.env
+*.key
+*.pem
+*.cert
+*.crt
+*.pfx
+secrets/
+credentials.json
+api_keys*
+
+# Python virtual environments & cache
+.venv
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.pytest_cache/
+.coverage
+htmlcov/
+
+# Databases & Backups
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.db-wal
+backups/
+instance/
+
+# Hardhat, Node & Build Artifacts
+node_modules/
+artifacts/
+cache/
+typechain/
+coverage/
+
+# Storage: Evidence Files, Monitored Targets & Generated Reports
+storage/evidence_vault/*
+!storage/evidence_vault/.gitkeep
+storage/monitored_targets/*
+!storage/monitored_targets/.gitkeep
+storage/generated_reports/*
+!storage/generated_reports/.gitkeep
+storage/reports_vault/*
+!storage/reports_vault/.gitkeep
+storage/*.db
+storage/*.db-journal
+
+# IDE, OS & Logs
+.vscode/
+.idea/
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini

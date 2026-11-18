@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pre-Attack File Monitoring | Blockchain Forensic System</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script>(function () { document.documentElement.setAttribute('data-theme', localStorage.getItem('forensic_theme') || 'quantum'); })();</script>
+</head>
+
+<body>
+
+  <div class="app-container">
+    <!-- Left Cyber Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 2.18l7 3.12v4.7c0 4.67-3.13 9.03-7 10.18-3.87-1.15-7-5.51-7-10.18V6.3l7-3.12zm-1 5.82a3 3 0 100 6 3 3 0 000-6zm0 2a1 1 0 110 2 1 1 0 010-2zm4.71 4.29l2.58 2.59-1.42 1.41-2.58-2.58a5.006 5.006 0 01-3.29 1.29C8.46 17.5 6 15.04 6 12s2.46-5.5 5.5-5.5 5.5 2.46 5.5 5.5c0 1.25-.43 2.4-1.29 3.29z" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>Blockchain<br>Forensic System</h1>
+          <p>Investigate • Verify • Prove</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item-link">
+          <i class="bi bi-grid-fill"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="evidence.html" class="nav-item-link">
+          <i class="bi bi-folder-plus"></i>
+          <span>Evidence Registration</span>
+        </a>
+        <a href="monitoring.html" class="nav-item-link active">
+          <i class="bi bi-activity"></i>
+          <span>File Monitoring</span>
+        </a>
+        <a href="verification.html" class="nav-item-link">
+          <i class="bi bi-shield-check"></i>
+          <span>Evidence Verification</span>
+        </a>
+        <a href="investigations.html" class="nav-item-link">
+          <i class="bi bi-briefcase-fill"></i>
+          <span>Investigation Management</span>
+        </a>
+        <a href="reports.html" class="nav-item-link">
+          <i class="bi bi-file-earmark-text-fill"></i>
+          <span>Forensic Reports</span>
+        </a>
+        <a href="alerts.html" class="nav-item-link">
+          <i class="bi bi-bell-fill"></i>
+          <span>Alerts</span>
+          <span class="badge-counter">3</span>
+        </a>
+        <a href="settings.html" class="nav-item-link">
+          <i class="bi bi-gear-fill"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer-card">
+        <div class="hologram-scales-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+          </svg>
+        </div>
+        <h6 class="footer-title">Digital Forensics</h6>
+        <p class="footer-sub">Chain of Custody</p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      <header class="app-header">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle">
+          <i class="bi bi-list fs-4"></i>
+        </button>
+
+        <div class="header-search-bar">
+          <i class="bi bi-search"></i>
+          <input type="text" id="globalSearchInput" class="header-search-input" placeholder="Search evidence, cases...">
+        </div>
+
+        <div class="header-right-actions">
+          <div class="system-status-pill">
+            <div class="status-indicator-dot"></div>
+            <span class="status-pill-text">Account Active</span>
+            <span class="status-pill-time" id="systemLiveClock">Mon, Apr 28, 2025 • 14:32:18</span>
+          </div>
+
+          <!-- Theme Toggle Switch Button -->
+          <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode"
+            aria-label="Toggle Theme">
+            <i class="bi bi-sun-fill text-warning" id="themeToggleIcon"></i>
+          </button>
+
+          <button class="notification-btn" title="View Notifications" onclick="window.location.href='alerts.html'">
+            <i class="bi bi-bell-fill"></i>
+            <span class="notification-badge">3</span>
+          </button>
+
+          <div class="dropdown">
+            <button class="user-profile-btn" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="user-avatar">
+                <i class="bi bi-person-fill"></i>
+              </div>
+              <div class="user-meta d-none d-md-block">
+                <div class="user-name">Mr. Narra Lokesh Vardhan</div>
+                <div class="user-role">Investigator</div>
+              </div>
+              <i class="bi bi-chevron-down text-muted ms-1" style="font-size: 0.75rem;"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end cyber-modal-content p-2"
+              style="background:#101C2E; border:1px solid #203650;">
+              <li><a class="dropdown-item text-light rounded py-2" href="settings.html"><i
+                    class="bi bi-person-gear me-2 text-primary"></i> Profile & Security</a></li>
+              <li><a class="dropdown-item text-light rounded py-2" href="evidence.html"><i
+                    class="bi bi-shield-lock me-2 text-primary"></i> My Evidence</a></li>
+              <li>
+                <hr class="dropdown-divider border-secondary my-1">
+              </li>
+              <li><a class="dropdown-item text-danger rounded py-2" href="javascript:void(0)"
+                  onclick="handleLogout()"><i class="bi bi-box-arrow-right me-2"></i> Terminate Session</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-body-content">
+        <!-- Section Header -->
+        <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
+          <div>
+            <h2 class="font-heading fw-bold text-white mb-1">Pre-Attack File Monitoring</h2>
+            <p class="text-secondary small mb-0">Establish trusted SHA-256 cryptographic baselines before incident
+              detonation and detect unauthorized file modifications or deletions.</p>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-cyber-primary" onclick="triggerGlobalCheck()">
+              <i class="bi bi-arrow-repeat"></i> Check All Now
+            </button>
+            <button class="btn btn-cyber-outline" data-bs-toggle="modal" data-bs-target="#addFileModal">
+              <i class="bi bi-plus-circle"></i> Add Monitored Target
+            </button>
+          </div>
+        </div>
+
+        <!-- Critical Forensic Principle Alert Box -->
+        <div class="p-3 mb-4 rounded"
+          style="background: rgba(155, 122, 251, 0.08); border: 1px solid rgba(155, 122, 251, 0.35);">
+          <div class="d-flex align-items-center gap-3">
+            <i class="bi bi-shield-exclamation text-info fs-3"></i>
+            <div>
+              <div class="text-light fw-bold" style="font-size:0.92rem;">Forensic Integrity Protocol: Baseline Proof vs.
+                Unknown State</div>
+              <div class="text-secondary small mt-1">
+                The system strictly distinguishes between a file verified against a trusted pre-attack baseline and an
+                unbaselined file. If no trusted baseline exists prior to an incident, the system flags the target as
+                <span class="badge-forensic-status badge-status-unknown py-0 px-2">Unknown Baseline</span> and will
+                never claim proof of tampering without original cryptographic reference.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Monitored Files Card -->
+        <div class="cyber-card">
+          <div class="cyber-card-header flex-wrap gap-2">
+            <div class="card-title-group">
+              <i class="bi bi-shield-lock-fill text-primary"></i>
+              <h3 class="card-header-title">Active Monitored Targets</h3>
+            </div>
+
+            <!-- Controls -->
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+              <input type="text" id="monitoringSearchInput" class="form-control-cyber"
+                style="width: 220px; padding: 6px 12px; font-size: 0.82rem;" placeholder="Search target filename..."
+                oninput="renderMonitoringTable()">
+              <select class="cyber-select-sm" id="monitoringStatusFilter" onchange="renderMonitoringTable()">
+                <option value="all">All Statuses</option>
+                <option value="unchanged">Unchanged</option>
+                <option value="modified">Modified</option>
+                <option value="missing">Missing</option>
+                <option value="unknown baseline">Unknown Baseline</option>
+                <option value="disabled">Disabled</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="cyber-table-wrap">
+            <table class="cyber-table">
+              <thead>
+                <tr>
+                  <th>Target ID</th>
+                  <th>Target File & Path</th>
+                  <th>Baseline SHA-256 Digest</th>
+                  <th>Interval</th>
+                  <th>Last Checked</th>
+                  <th>Integrity Status</th>
+                  <th style="min-width: 170px;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="monitoredFilesTableBody">
+                <!-- Rendered dynamically by monitoring.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Add Monitored Target Modal -->
+  <div class="modal fade" id="addFileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content cyber-modal-content">
+        <div class="modal-header cyber-modal-header">
+          <h5 class="modal-title font-heading d-flex align-items-center gap-2">
+            <i class="bi bi-plus-circle text-primary"></i> Register New Monitoring Target
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="addMonitoredFileForm">
+          <div class="modal-body p-4">
+            <!-- Mode Tabs -->
+            <ul class="nav nav-pills mb-3 d-flex gap-2" id="addModeTabs" role="tablist">
+              <li class="nav-item flex-fill" role="presentation">
+                <button class="nav-link active w-100 text-center py-2" id="tabUploadBtn" type="button"
+                  onclick="switchAddMode('upload')">
+                  <i class="bi bi-cloud-arrow-up me-1"></i> Upload File
+                </button>
+              </li>
+              <li class="nav-item flex-fill" role="presentation">
+                <button class="nav-link w-100 text-center py-2" id="tabPathBtn" type="button"
+                  onclick="switchAddMode('path')">
+                  <i class="bi bi-folder2-open me-1"></i> Local Path
+                </button>
+              </li>
+            </ul>
+
+            <!-- Upload Mode Panel -->
+            <div id="addModeUploadPanel">
+              <div class="mb-3">
+                <label class="form-label-cyber">Choose Physical File to Monitor *</label>
+                <input type="file" class="form-control-cyber" id="newMonFileInput">
+                <small class="text-muted d-block mt-1">Uploaded file will be securely stored in
+                  <code>storage/monitored_targets/</code> and hashed with real SHA-256.</small>
+              </div>
+            </div>
+
+            <!-- Path Mode Panel -->
+            <div id="addModePathPanel" style="display:none;">
+              <div class="mb-3">
+                <label class="form-label-cyber">Target Filename *</label>
+                <input type="text" class="form-control-cyber" id="newMonFileName"
+                  placeholder="e.g., active_directory.dit or test.txt">
+              </div>
+              <div class="mb-3">
+                <label class="form-label-cyber">Filesystem Target Path *</label>
+                <input type="text" class="form-control-cyber font-mono small" id="newMonFilePath"
+                  placeholder="storage/monitored_targets/test.txt or C:\path\file.txt">
+                <small class="text-muted d-block mt-1">Enter absolute or relative path to an existing or planned
+                  file.</small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label-cyber">Daemon Check Frequency</label>
+              <select class="form-control-cyber" id="newMonFrequency">
+                <option value="30s">Every 30 Seconds (High Priority)</option>
+                <option value="60s" selected>Every 60 Seconds (Standard)</option>
+                <option value="120s">Every 2 Minutes</option>
+                <option value="300s">Every 5 Minutes (Low Overhead)</option>
+              </select>
+            </div>
+            <div class="form-check mt-3">
+              <input class="form-check-input" type="checkbox" id="newMonRegisterBaseline" checked>
+              <label class="form-check-label text-light small" for="newMonRegisterBaseline">
+                Compute & Register Initial SHA-256 as Trusted Baseline Anchor
+              </label>
+            </div>
+          </div>
+          <div class="modal-footer cyber-modal-footer">
+            <button type="button" class="btn-cyber-outline" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-cyber-primary" id="addMonSubmitBtn">
+              <i class="bi bi-shield-plus me-1"></i> Add Target
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Monitored Target Modal -->
+  <div class="modal fade" id="editFileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content cyber-modal-content">
+        <div class="modal-header cyber-modal-header">
+          <h5 class="modal-title font-heading d-flex align-items-center gap-2">
+            <i class="bi bi-pencil-square text-primary"></i> Edit Target Path & Settings
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="editMonitoredFileForm">
+          <input type="hidden" id="editTargetId">
+          <div class="modal-body p-4">
+            <div class="mb-3">
+              <label class="form-label-cyber">Target ID</label>
+              <input type="text" class="form-control-cyber" id="editTargetIdDisplay" readonly disabled>
+            </div>
+            <div class="mb-3">
+              <label class="form-label-cyber">Target Filename *</label>
+              <input type="text" class="form-control-cyber" id="editTargetFilename" required>
+              <small class="text-muted d-block mt-1">Update filename if you renamed the target.</small>
+            </div>
+            <div class="mb-3">
+              <label class="form-label-cyber">Target Filesystem Path *</label>
+              <input type="text" class="form-control-cyber font-mono small" id="editTargetPath" required>
+              <small class="text-muted d-block mt-1">Update filesystem path if the file was moved or renamed.</small>
+            </div>
+            <div class="mb-3">
+              <label class="form-label-cyber">Daemon Check Frequency</label>
+              <select class="form-control-cyber" id="editTargetFrequency">
+                <option value="30s">Every 30 Seconds (High Priority)</option>
+                <option value="60s">Every 60 Seconds (Standard)</option>
+                <option value="120s">Every 2 Minutes</option>
+                <option value="300s">Every 5 Minutes (Low Overhead)</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer cyber-modal-footer">
+            <button type="button" class="btn-cyber-outline" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-cyber-primary">
+              <i class="bi bi-check2-circle me-1"></i> Update & Re-scan
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Modal -->
+  <div class="modal fade" id="monitoringHistoryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content cyber-modal-content">
+        <div class="modal-header cyber-modal-header">
+          <h5 class="modal-title font-heading d-flex align-items-center gap-2">
+            <i class="bi bi-clock-history text-primary"></i> Monitoring Event Audit Trail
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <h5 class="text-white mb-3" id="historyFileName">filename.ext</h5>
+
+          <div class="p-3 rounded mb-3" style="background:#0D1626; border:1px solid #203650;">
+            <small class="text-secondary d-block">TRUSTED BASELINE HASH</small>
+            <div class="mono-hash text-success small text-break mt-1" id="historyBaselineHash">-</div>
+
+            <small class="text-secondary d-block mt-3">MOST RECENT SCANNED HASH</small>
+            <div class="mono-hash text-danger small text-break mt-1" id="historyCurrentHash">-</div>
+          </div>
+
+          <div class="card-header-title mb-2" style="font-size:0.95rem;">Historical Event Log:</div>
+          <div class="activity-timeline-list" id="historyEventsList">
+            <!-- Populated by monitoring.js -->
+          </div>
+        </div>
+        <div class="modal-footer cyber-modal-footer">
+          <button type="button" class="btn-cyber-outline" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js?v=20261118_v1"></script>
+  <script src="js/auth.js?v=20261118_v1"></script>
+  <script src="js/monitoring.js?v=20261118_v1"></script>
+</body>
+
+</html>

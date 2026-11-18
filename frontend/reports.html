@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forensic Reports | Blockchain Forensic System</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script>(function(){document.documentElement.setAttribute('data-theme', localStorage.getItem('forensic_theme') || 'quantum');})();</script>
+  <style>
+    /* Professional Forensic Report Preview Sheet */
+    .report-paper-preview {
+      background: #FFFFFF;
+      color: #0F172A;
+      border-radius: var(--radius-sm);
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      border: 1px solid #CBD5E1;
+      position: relative;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .report-paper-preview::after {
+      content: 'CONFIDENTIAL FORENSIC REPORT';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      font-size: 3rem;
+      font-weight: 800;
+      color: rgba(0, 0, 0, 0.04);
+      pointer-events: none;
+      white-space: nowrap;
+      letter-spacing: 4px;
+    }
+
+    .report-paper-preview table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-top: 10px;
+    }
+
+    .report-paper-preview th,
+    .report-paper-preview td {
+      border: 1px solid #CBD5E1;
+      padding: 8px 10px;
+      text-align: left;
+      color: #0F172A;
+    }
+
+    .report-paper-preview th {
+      background-color: #F1F5F9;
+      font-weight: 600;
+      color: #1E293B;
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+
+      .report-paper-preview,
+      .report-paper-preview * {
+        visibility: visible;
+      }
+
+      .report-paper-preview {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app-container">
+    <!-- Left Cyber Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 2.18l7 3.12v4.7c0 4.67-3.13 9.03-7 10.18-3.87-1.15-7-5.51-7-10.18V6.3l7-3.12zm-1 5.82a3 3 0 100 6 3 3 0 000-6zm0 2a1 1 0 110 2 1 1 0 010-2zm4.71 4.29l2.58 2.59-1.42 1.41-2.58-2.58a5.006 5.006 0 01-3.29 1.29C8.46 17.5 6 15.04 6 12s2.46-5.5 5.5-5.5 5.5 2.46 5.5 5.5c0 1.25-.43 2.4-1.29 3.29z" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>Blockchain<br>Forensic System</h1>
+          <p>Investigate • Verify • Prove</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item-link">
+          <i class="bi bi-grid-fill"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="evidence.html" class="nav-item-link">
+          <i class="bi bi-folder-plus"></i>
+          <span>Evidence Registration</span>
+        </a>
+        <a href="monitoring.html" class="nav-item-link">
+          <i class="bi bi-activity"></i>
+          <span>File Monitoring</span>
+        </a>
+        <a href="verification.html" class="nav-item-link">
+          <i class="bi bi-shield-check"></i>
+          <span>Evidence Verification</span>
+        </a>
+        <a href="investigations.html" class="nav-item-link">
+          <i class="bi bi-briefcase-fill"></i>
+          <span>Investigation Management</span>
+        </a>
+        <a href="reports.html" class="nav-item-link active">
+          <i class="bi bi-file-earmark-text-fill"></i>
+          <span>Forensic Reports</span>
+        </a>
+        <a href="alerts.html" class="nav-item-link">
+          <i class="bi bi-bell-fill"></i>
+          <span>Alerts</span>
+          <span class="badge-counter">3</span>
+        </a>
+        <a href="settings.html" class="nav-item-link">
+          <i class="bi bi-gear-fill"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer-card">
+        <div class="hologram-scales-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+          </svg>
+        </div>
+        <h6 class="footer-title">Digital Forensics</h6>
+        <p class="footer-sub">Chain of Custody</p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      <header class="app-header">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle">
+          <i class="bi bi-list fs-4"></i>
+        </button>
+
+        <div class="header-search-bar">
+          <i class="bi bi-search"></i>
+          <input type="text" id="globalSearchInput" class="header-search-input" placeholder="Search evidence, cases...">
+        </div>
+
+        <div class="header-right-actions">
+          <div class="system-status-pill">
+            <div class="status-indicator-dot"></div>
+            <span class="status-pill-text">Report Engine Online</span>
+            <span class="status-pill-time" id="systemLiveClock">Mon, Apr 28, 2025 • 14:32:18</span>
+          </div>
+
+          <!-- Theme Toggle Switch Button -->
+          <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode" aria-label="Toggle Theme">
+            <i class="bi bi-sun-fill text-warning" id="themeToggleIcon"></i>
+          </button>
+
+          <button class="notification-btn" title="View Notifications" onclick="window.location.href='alerts.html'">
+            <i class="bi bi-bell-fill"></i>
+            <span class="notification-badge">3</span>
+          </button>
+
+          <div class="dropdown">
+            <button class="user-profile-btn" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="user-avatar">
+                <i class="bi bi-person-fill"></i>
+              </div>
+              <div class="user-meta d-none d-md-block">
+                <div class="user-name">Mr. Narra Lokesh Vardhan</div>
+                <div class="user-role">Investigator</div>
+              </div>
+              <i class="bi bi-chevron-down text-muted ms-1" style="font-size: 0.75rem;"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end cyber-modal-content p-2"
+              style="background:#101C2E; border:1px solid #203650;">
+              <li><a class="dropdown-item text-light rounded py-2" href="settings.html"><i
+                    class="bi bi-person-gear me-2 text-primary"></i> Profile & Security</a></li>
+              <li><a class="dropdown-item text-light rounded py-2" href="evidence.html"><i
+                    class="bi bi-shield-lock me-2 text-primary"></i> My Evidence</a></li>
+              <li>
+                <hr class="dropdown-divider border-secondary my-1">
+              </li>
+              <li><a class="dropdown-item text-danger rounded py-2" href="javascript:void(0)"
+                  onclick="handleLogout()"><i class="bi bi-box-arrow-right me-2"></i> Terminate Session</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-body-content">
+        <!-- Section Header -->
+        <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
+          <div>
+            <h2 class="font-heading fw-bold text-white mb-1">Forensic Investigation Reports</h2>
+            <p class="text-secondary small mb-0">Generate court-admissible digital forensic investigation reports with
+              SHA-256 integrity proofs and blockchain chain-of-custody anchors.</p>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-cyber-primary" onclick="printForensicReport()">
+              <i class="bi bi-printer"></i> Print / Download PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- Report Generation Layout -->
+        <div class="row g-4">
+          <!-- Left: Configuration Form, Custom Upload & Saved Reports -->
+          <div class="col-lg-4">
+            <div class="cyber-card mb-4">
+              <div class="cyber-card-header">
+                <div class="card-title-group">
+                  <i class="bi bi-sliders text-primary"></i>
+                  <h3 class="card-header-title">Report Parameters</h3>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label-cyber">Investigation Case *</label>
+                <select class="form-control-cyber" id="reportCaseSelect">
+                  <!-- Dynamically populated -->
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label-cyber">Inclusions & Sections</label>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="optIncludeHashes" checked
+                    onchange="generateForensicReport()">
+                  <label class="form-check-label text-light small" for="optIncludeHashes">
+                    Full SHA-256 Hashes & Integrity Status
+                  </label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="optIncludeBlockchain" checked
+                    onchange="generateForensicReport()">
+                  <label class="form-check-label text-light small" for="optIncludeBlockchain">
+                    Blockchain Smart Contract Tx Anchors
+                  </label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="optIncludeChainOfCustody" checked
+                    onchange="generateForensicReport()">
+                  <label class="form-check-label text-light small" for="optIncludeChainOfCustody">
+                    Chain-of-Custody Custodian Log
+                  </label>
+                </div>
+              </div>
+
+              <div class="mt-4">
+                <button class="btn btn-cyber-primary w-100 justify-content-center" onclick="generateForensicReport()">
+                  <i class="bi bi-file-earmark-diff"></i> Refresh Document Preview
+                </button>
+              </div>
+            </div>
+
+            <!-- Upload User's Own Report File -->
+            <div class="cyber-card mb-4">
+              <div class="cyber-card-header">
+                <div class="card-title-group">
+                  <i class="bi bi-cloud-arrow-up-fill text-primary"></i>
+                  <h3 class="card-header-title">Upload Custom Report</h3>
+                </div>
+              </div>
+              <p class="text-secondary small mb-3">Upload your own existing digital forensic report file (.pdf, .docx, .txt, .csv) to the secure vault.</p>
+              <form id="uploadReportForm" onsubmit="handleUploadReport(event)">
+                <div class="mb-3">
+                  <label class="form-label-cyber">Select Report File *</label>
+                  <input type="file" class="form-control-cyber" id="customReportFile" accept=".pdf,.txt,.docx,.doc,.json,.csv" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-cyber">Case ID / Reference (Optional)</label>
+                  <input type="text" class="form-control-cyber" id="customReportCaseId" placeholder="e.g. CASE-001">
+                </div>
+                <button type="submit" class="btn btn-cyber-primary w-100 justify-content-center" id="uploadReportBtn">
+                  <i class="bi bi-upload"></i> Upload to Reports Vault
+                </button>
+              </form>
+            </div>
+
+            <!-- Previously Generated & Uploaded Reports -->
+            <div class="cyber-card">
+              <div class="cyber-card-header d-flex justify-content-between align-items-center">
+                <div class="card-title-group">
+                  <i class="bi bi-archive-fill text-primary"></i>
+                  <h3 class="card-header-title">Archived Reports</h3>
+                </div>
+                <button class="btn btn-sm btn-link text-secondary p-0" title="Reload reports list" onclick="loadSavedReports()">
+                  <i class="bi bi-arrow-clockwise"></i>
+                </button>
+              </div>
+              <div id="savedReportsList">
+                <!-- Dynamically populated from /api/reports -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Live Forensic Document Preview Sheet -->
+          <div class="col-lg-8">
+            <div class="report-paper-preview" id="reportPreviewDoc">
+              <!-- Empty State when No Case is Selected -->
+              <div id="reportEmptyState" style="display: none; padding: 60px 20px; text-align: center;">
+                <div class="mb-3 text-secondary">
+                  <i class="bi bi-file-earmark-medical" style="font-size: 3.5rem; color: #475569;"></i>
+                </div>
+                <h5 class="fw-bold text-dark mb-2">No Investigation Case Selected</h5>
+                <p class="text-muted small mx-auto mb-3" style="max-width: 440px;">
+                  Select an active case from the parameters panel on the left to preview and generate a formal, court-defensible forensic report, or upload your own report file.
+                </p>
+                <a href="investigations.html" class="btn btn-sm btn-outline-primary">
+                  <i class="bi bi-plus-circle me-1"></i> Create Investigation Case
+                </a>
+              </div>
+
+              <!-- Active Report Document Content -->
+              <div id="reportActiveContent">
+                <!-- Official Header -->
+                <div class="d-flex justify-content-between align-items-start border-bottom pb-3 mb-3">
+                  <div>
+                    <h4 class="fw-bold mb-1" style="color: #0F172A; letter-spacing: -0.5px;">CYBER FORENSIC INCIDENT INVESTIGATION REPORT</h4>
+                    <div class="text-muted small">DEPARTMENT OF DIGITAL FORENSICS & INCIDENT RESPONSE</div>
+                    <div class="text-muted small">BLOCKCHAIN-BASED CHAIN-OF-CUSTODY VERIFICATION SYSTEM</div>
+                  </div>
+                  <div class="text-end">
+                    <span class="badge bg-danger mb-1">STRICTLY CONFIDENTIAL</span>
+                    <div class="small fw-bold" id="repDocNumber">--</div>
+                    <div class="small text-muted" id="repDocDate">--</div>
+                  </div>
+                </div>
+
+                <!-- Case Overview Table -->
+                <h6 class="fw-bold text-uppercase mb-2" style="color:#1E293B; font-size:0.85rem;">1. Investigation Case Metadata</h6>
+                <table class="mb-3">
+                  <tr>
+                    <th style="width: 25%;">Case Identifier:</th>
+                    <td id="repHdrCaseId" class="fw-bold">--</td>
+                    <th style="width: 25%;">Severity Rating:</th>
+                    <td id="repHdrSeverity" class="text-danger fw-bold">--</td>
+                  </tr>
+                  <tr>
+                    <th>Incident Title:</th>
+                    <td colspan="3" id="repHdrTitle">--</td>
+                  </tr>
+                  <tr>
+                    <th>Lead Investigator:</th>
+                    <td id="repHdrInvestigator">--</td>
+                    <th>Case Status:</th>
+                    <td id="repHdrStatus">--</td>
+                  </tr>
+                </table>
+
+                <!-- Executive Summary -->
+                <h6 class="fw-bold text-uppercase mb-2 mt-4" style="color:#1E293B; font-size:0.85rem;">2. Executive Forensic Summary</h6>
+                <p class="small text-secondary mb-3" style="line-height:1.5;" id="repSummaryText">
+                  --
+                </p>
+
+                <!-- Evidence Ledger Table -->
+                <h6 class="fw-bold text-uppercase mb-2 mt-4" style="color:#1E293B; font-size:0.85rem;">3. Digital Evidence & Cryptographic Verification</h6>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Evidence ID</th>
+                      <th>Filename</th>
+                      <th>Category</th>
+                      <th>Integrity Status</th>
+                      <th>SHA-256 Digest</th>
+                    </tr>
+                  </thead>
+                  <tbody id="repEvidenceTableBody">
+                    <!-- Dynamically rendered -->
+                  </tbody>
+                </table>
+
+                <!-- Blockchain Ledger Proof -->
+                <div id="repBlockchainSection" class="mt-4">
+                  <h6 class="fw-bold text-uppercase mb-2" style="color:#1E293B; font-size:0.85rem;">4. Blockchain Proof of Custody</h6>
+                  <div class="p-2 bg-light border rounded small">
+                    <div><strong>Smart Contract:</strong> <span class="font-mono">0x5FbDB2315678afecb367f032d93F642f64180aa3</span></div>
+                    <div><strong>Consensus Network:</strong> Ethereum / Hardhat Localnet (ChainID: 31337)</div>
+                    <div><strong>Audit Guarantee:</strong> Cryptographic hashes and custody events are immutably anchored on-chain with verifiable block timestamps.</div>
+                  </div>
+                </div>
+
+                <!-- Sign-Off & Attestation -->
+                <div id="repCustodySection" class="mt-4 pt-3 border-top">
+                  <div class="row align-items-center">
+                    <div class="col-8">
+                      <div class="small text-muted">Attested under Federal Digital Evidence Admissibility Guidelines:</div>
+                      <div class="fw-bold small text-dark mt-1" id="repAttestedInvestigator">Mr. Narra Lokesh Vardhan, Senior Forensic Analyst</div>
+                      <div class="text-muted" style="font-size:0.75rem;">Digital Signature ID: <span class="font-mono">0x9d4ca3f59120bc984210e7d2</span></div>
+                    </div>
+                    <div class="col-4 text-end">
+                      <div class="border d-inline-block p-2 text-center rounded bg-light" style="width: 110px;">
+                        <i class="bi bi-shield-fill-check text-success fs-3"></i>
+                        <div class="text-success fw-bold" style="font-size:0.65rem;">BLOCKCHAIN VERIFIED</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/reports.js"></script>
+</body>
+
+</html>

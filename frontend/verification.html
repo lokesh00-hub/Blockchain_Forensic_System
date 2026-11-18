@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evidence Verification | Blockchain Forensic System</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script>(function(){document.documentElement.setAttribute('data-theme', localStorage.getItem('forensic_theme') || 'quantum');})();</script>
+</head>
+<body>
+
+<div class="app-container">
+  <!-- Left Cyber Sidebar -->
+  <aside class="app-sidebar">
+    <div class="sidebar-header">
+      <div class="brand-logo-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 2.18l7 3.12v4.7c0 4.67-3.13 9.03-7 10.18-3.87-1.15-7-5.51-7-10.18V6.3l7-3.12zm-1 5.82a3 3 0 100 6 3 3 0 000-6zm0 2a1 1 0 110 2 1 1 0 010-2zm4.71 4.29l2.58 2.59-1.42 1.41-2.58-2.58a5.006 5.006 0 01-3.29 1.29C8.46 17.5 6 15.04 6 12s2.46-5.5 5.5-5.5 5.5 2.46 5.5 5.5c0 1.25-.43 2.4-1.29 3.29z"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>Blockchain<br>Forensic System</h1>
+        <p>Investigate • Verify • Prove</p>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item-link">
+        <i class="bi bi-grid-fill"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="evidence.html" class="nav-item-link">
+        <i class="bi bi-folder-plus"></i>
+        <span>Evidence Registration</span>
+      </a>
+      <a href="monitoring.html" class="nav-item-link">
+        <i class="bi bi-activity"></i>
+        <span>File Monitoring</span>
+      </a>
+      <a href="verification.html" class="nav-item-link active">
+        <i class="bi bi-shield-check"></i>
+        <span>Evidence Verification</span>
+      </a>
+      <a href="investigations.html" class="nav-item-link">
+        <i class="bi bi-briefcase-fill"></i>
+        <span>Investigation Management</span>
+      </a>
+      <a href="reports.html" class="nav-item-link">
+        <i class="bi bi-file-earmark-text-fill"></i>
+        <span>Forensic Reports</span>
+      </a>
+      <a href="alerts.html" class="nav-item-link">
+        <i class="bi bi-bell-fill"></i>
+        <span>Alerts</span>
+        <span class="badge-counter">3</span>
+      </a>
+      <a href="settings.html" class="nav-item-link">
+        <i class="bi bi-gear-fill"></i>
+        <span>Settings</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer-card">
+      <div class="hologram-scales-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+        </svg>
+      </div>
+      <h6 class="footer-title">Digital Forensics</h6>
+      <p class="footer-sub">Chain of Custody</p>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="app-main">
+    <header class="app-header">
+      <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="bi bi-list fs-4"></i>
+      </button>
+
+      <div class="header-search-bar">
+        <i class="bi bi-search"></i>
+        <input type="text" id="globalSearchInput" class="header-search-input" placeholder="Search evidence, cases...">
+      </div>
+
+      <div class="header-right-actions">
+        <div class="system-status-pill">
+          <div class="status-indicator-dot"></div>
+          <span class="status-pill-text">Verifier Ready</span>
+          <span class="status-pill-time" id="systemLiveClock">Mon, Apr 28, 2025 • 14:32:18</span>
+        </div>
+
+        <!-- Theme Toggle Switch Button -->
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode" aria-label="Toggle Theme">
+          <i class="bi bi-sun-fill text-warning" id="themeToggleIcon"></i>
+        </button>
+
+        <button class="notification-btn" title="View Notifications" onclick="window.location.href='alerts.html'">
+          <i class="bi bi-bell-fill"></i>
+          <span class="notification-badge">3</span>
+        </button>
+
+        <div class="dropdown">
+          <button class="user-profile-btn" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="user-avatar">
+              <i class="bi bi-person-fill"></i>
+            </div>
+            <div class="user-meta d-none d-md-block">
+              <div class="user-name">Mr. Narra Lokesh Vardhan</div>
+              <div class="user-role">Investigator</div>
+            </div>
+            <i class="bi bi-chevron-down text-muted ms-1" style="font-size: 0.75rem;"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end cyber-modal-content p-2" style="background:#101C2E; border:1px solid #203650;">
+            <li><a class="dropdown-item text-light rounded py-2" href="settings.html"><i class="bi bi-person-gear me-2 text-primary"></i> Profile & Security</a></li>
+            <li><a class="dropdown-item text-light rounded py-2" href="evidence.html"><i class="bi bi-shield-lock me-2 text-primary"></i> My Evidence</a></li>
+            <li><hr class="dropdown-divider border-secondary my-1"></li>
+            <li><a class="dropdown-item text-danger rounded py-2" href="javascript:void(0)" onclick="handleLogout()"><i class="bi bi-box-arrow-right me-2"></i> Terminate Session</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-body-content">
+      <!-- Section Header -->
+      <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
+        <div>
+          <h2 class="font-heading fw-bold text-white mb-1">Evidence Verification Workbench</h2>
+          <p class="text-secondary small mb-0">Cryptographically audit collected post-incident evidence files against registered on-chain hashes to prove authenticity or expose tampering.</p>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-cyber-outline" onclick="clearVerificationForm()">
+            <i class="bi bi-arrow-counterclockwise"></i> Clear Workbench
+          </button>
+        </div>
+      </div>
+
+      <!-- Verification Dual-Pane Row -->
+      <div class="row g-4 mb-4">
+        <!-- Left: Select Registered Evidence Record -->
+        <div class="col-lg-6">
+          <div class="cyber-card h-100">
+            <div class="cyber-card-header">
+              <div class="card-title-group">
+                <i class="bi bi-database-check text-primary"></i>
+                <h3 class="card-header-title">Step 1: Baseline Reference Record</h3>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label-cyber">Select Registered Evidence to Audit *</label>
+              <select class="form-control-cyber" id="verifyEvidenceSelect">
+                <!-- Dynamically loaded -->
+              </select>
+            </div>
+
+            <!-- Baseline Record Details Card -->
+            <div id="baselineDetailsCard" class="p-3 rounded mt-3" style="display: none; background:#0D1626; border:1px solid #203650;">
+              <div class="row g-2 mb-2">
+                <div class="col-6">
+                  <small class="text-secondary">EVIDENCE ID</small>
+                  <div class="text-primary fw-bold" id="baselineEvidenceId">-</div>
+                </div>
+                <div class="col-6">
+                  <small class="text-secondary">CASE ID</small>
+                  <div class="text-light" id="baselineCaseId">-</div>
+                </div>
+                <div class="col-6">
+                  <small class="text-secondary">CATEGORY</small>
+                  <div class="text-info fw-semibold" id="baselineCategory">Digital Evidence</div>
+                </div>
+                <div class="col-6">
+                  <small class="text-secondary">ORIGINAL FILENAME</small>
+                  <div class="text-light fw-semibold text-truncate" id="baselineFileName">-</div>
+                </div>
+              </div>
+
+              <div class="mb-2">
+                <small class="text-secondary d-block">REGISTERED BASELINE SHA-256 HASH</small>
+                <div class="mono-hash text-success small text-break p-2 rounded mt-1" style="background:#070B14; border:1px solid #16263B;" id="baselineHashDigest">
+                  -
+                </div>
+              </div>
+
+              <div>
+                <small class="text-secondary d-block">IMMUTABLE BLOCKCHAIN TX</small>
+                <div class="mono-hash text-primary small text-break mt-1" id="baselineTxHash">
+                  -
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Suspect / Collected File Upload -->
+        <div class="col-lg-6">
+          <div class="cyber-card h-100">
+            <div class="cyber-card-header">
+              <div class="card-title-group">
+                <i class="bi bi-file-earmark-diff-fill text-primary"></i>
+                <h3 class="card-header-title">Step 2: Collected Post-Incident File</h3>
+              </div>
+            </div>
+
+            <!-- Dropzone -->
+            <div class="file-dropzone" id="verifyDropzone">
+              <input type="file" id="verifyFileInput" style="display: none;">
+              <i class="bi bi-upload dropzone-icon"></i>
+              <div class="dropzone-title">Upload suspect or collected evidence file</div>
+              <div class="dropzone-sub">Click to select or drag collected file from disk</div>
+            </div>
+
+            <!-- Live Hash Output -->
+            <div id="suspectHashBox" class="mt-3 p-3 rounded" style="display: none; background: #0D1626; border: 1px solid #203650;">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="text-white fw-semibold small" id="suspectFileName">-</span>
+                <span class="badge bg-secondary font-mono" id="suspectFileSize">-</span>
+              </div>
+              <small class="text-secondary d-block mt-2" id="suspectHashStatus">Current SHA-256 Digest:</small>
+              <div class="mono-hash text-info small text-break mt-1 p-2 rounded" style="background:#070B14; border:1px solid #16263B;" id="suspectHashDigest">
+                -
+              </div>
+            </div>
+
+            <!-- Manual Hash Input Option -->
+            <div class="mt-3">
+              <label class="form-label-cyber small text-secondary">Or Paste Suspect SHA-256 Hash Directly:</label>
+              <input type="text" class="form-control-cyber font-mono" id="manualSuspectHash" placeholder="e.g. 64-hex SHA-256 digest..." maxlength="64">
+            </div>
+
+            <div class="mt-4 text-end">
+              <button type="button" class="btn btn-cyber-primary" id="btnExecuteVerification" onclick="executeVerification(event); return false;">
+                <i class="bi bi-search"></i> Execute Comparative Verification
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Verification Verdict & Cryptographic Proof Section -->
+      <div id="verificationResultCard" class="cyber-card" style="display: none;">
+        <div class="cyber-card-header">
+          <div class="card-title-group">
+            <i class="bi bi-award-fill text-primary"></i>
+            <h3 class="card-header-title">Forensic Verification Verdict</h3>
+          </div>
+        </div>
+
+        <!-- Verdict Banner -->
+        <div id="verdictBanner" class="p-3 rounded mb-3">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <span id="verdictBadge" class="badge-forensic-status fs-6">-</span>
+            <span class="text-muted small">Validated via Smart Contract (ChainID 31337)</span>
+          </div>
+          <div class="text-light" id="verdictDesc">-</div>
+        </div>
+
+        <!-- Hash Diff Box -->
+        <div class="card-header-title mb-2" style="font-size:0.95rem;">Cryptographic Hash Comparison:</div>
+        <div id="diffComparisonBox" class="mb-4">
+          <!-- Populated by verification.js -->
+        </div>
+
+        <!-- Blockchain Ledger Confirmation Metadata -->
+        <div class="p-3 rounded" style="background:#0D1626; border:1px solid #203650;">
+          <h6 class="text-white font-heading mb-3">On-Chain Proof & Cryptographic Timestamps</h6>
+          <div class="row g-3 small">
+            <div class="col-md-4">
+              <span class="text-secondary d-block">SMART CONTRACT</span>
+              <span class="mono-hash text-primary">0x5FbDB2315678afecb367f032d93F642f64180aa3</span>
+            </div>
+            <div class="col-md-4">
+              <span class="text-secondary d-block">BLOCK CONFIRMATION</span>
+              <span class="text-success fw-bold">Block #498120 (12 Confirmations)</span>
+            </div>
+            <div class="col-md-4">
+              <span class="text-secondary d-block">MERKLE INTEGRITY</span>
+              <span class="text-success fw-bold"><i class="bi bi-shield-check"></i> Root Proof Verified</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end gap-2">
+          <button type="button" class="btn btn-cyber-outline" onclick="window.location.href='reports.html'">
+            <i class="bi bi-file-earmark-pdf"></i> Attach to Forensic Report
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/verification.js?v=20261118_v3"></script>
+</body>
+</html>

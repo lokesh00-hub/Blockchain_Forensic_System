@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminal Access & Registration | Blockchain Forensic System</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script>(function(){document.documentElement.setAttribute('data-theme', localStorage.getItem('forensic_theme') || 'quantum');})();</script>
+  <style>
+    .login-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+      position: relative;
+      z-index: 2;
+    }
+    .auth-box {
+      width: 100%;
+      max-width: 520px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 36px 32px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(8, 169, 245, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    .auth-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--secondary-blue), var(--primary-blue), var(--verified-green));
+    }
+    .auth-nav-tabs {
+      display: flex;
+      background: #0B1424;
+      border: 1px solid #1E3048;
+      border-radius: 8px;
+      padding: 4px;
+      margin-bottom: 24px;
+    }
+    .auth-nav-tab {
+      flex: 1;
+      padding: 8px 12px;
+      text-align: center;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: none;
+      background: transparent;
+    }
+    .auth-nav-tab.active {
+      background: var(--primary-blue);
+      color: #070B14;
+      box-shadow: 0 2px 10px rgba(8, 169, 245, 0.4);
+    }
+    .otp-input-box {
+      letter-spacing: 6px;
+      font-size: 1.25rem;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-weight: bold;
+    }
+    .verification-pill {
+      background: rgba(8, 169, 245, 0.1);
+      border: 1px dashed rgba(8, 169, 245, 0.35);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+    }
+    /* Dark theme input styling (default) */
+    html[data-theme="dark"] .form-control,
+    html[data-theme="dark"] .form-control-cyber,
+    html[data-theme="dark"] input,
+    html[data-theme="dark"] select,
+    :not([data-theme="light"]) .form-control,
+    :not([data-theme="light"]) .form-control-cyber,
+    :not([data-theme="light"]) input,
+    :not([data-theme="light"]) select {
+      background-color: #0D1626 !important;
+      color: #FFFFFF !important;
+      border: 1px solid #203650 !important;
+    }
+    html[data-theme="dark"] .form-control:focus,
+    html[data-theme="dark"] .form-control-cyber:focus,
+    html[data-theme="dark"] input:focus,
+    html[data-theme="dark"] select:focus,
+    :not([data-theme="light"]) .form-control:focus,
+    :not([data-theme="light"]) .form-control-cyber:focus,
+    :not([data-theme="light"]) input:focus,
+    :not([data-theme="light"]) select:focus {
+      background-color: #101c30 !important;
+      color: #FFFFFF !important;
+      border-color: #08A9F5 !important;
+      box-shadow: 0 0 12px rgba(8, 169, 245, 0.35) !important;
+      outline: none !important;
+    }
+    html[data-theme="dark"] input:-webkit-autofill,
+    html[data-theme="dark"] input:-webkit-autofill:hover, 
+    html[data-theme="dark"] input:-webkit-autofill:focus, 
+    html[data-theme="dark"] input:-webkit-autofill:active,
+    :not([data-theme="light"]) input:-webkit-autofill {
+      -webkit-text-fill-color: #FFFFFF !important;
+      -webkit-box-shadow: 0 0 0 1000px #0D1626 inset !important;
+      caret-color: #FFFFFF !important;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+    html[data-theme="dark"] ::placeholder,
+    :not([data-theme="light"]) ::placeholder {
+      color: #64748B !important;
+      opacity: 1 !important;
+    }
+    html[data-theme="dark"] .input-group-text,
+    :not([data-theme="light"]) .input-group-text {
+      background-color: #0B1424 !important;
+      border-color: #203650 !important;
+      color: #08A9F5 !important;
+    }
+
+    /* Quantum Void theme styling for Login & Sign-up */
+    html[data-theme="quantum"] .auth-box {
+      background: #151026 !important;
+      border: 1px solid #2C2250 !important;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(139, 92, 246, 0.25) !important;
+    }
+    html[data-theme="quantum"] .auth-box::before {
+      background: linear-gradient(90deg, #6D28D9, #8B5CF6, #10B981) !important;
+    }
+    html[data-theme="quantum"] .auth-nav-tabs {
+      background: #0E0A1A !important;
+      border: 1px solid #2C2250 !important;
+    }
+    html[data-theme="quantum"] .auth-nav-tab.active {
+      background: #8B5CF6 !important;
+      color: #FFFFFF !important;
+      box-shadow: 0 2px 10px rgba(139, 92, 246, 0.5) !important;
+    }
+    html[data-theme="quantum"] .form-control,
+    html[data-theme="quantum"] .form-control-cyber,
+    html[data-theme="quantum"] input,
+    html[data-theme="quantum"] select {
+      background-color: #100B1E !important;
+      color: #F5F3FF !important;
+      border: 1px solid #2C2250 !important;
+    }
+    html[data-theme="quantum"] .form-control:focus,
+    html[data-theme="quantum"] .form-control-cyber:focus,
+    html[data-theme="quantum"] input:focus,
+    html[data-theme="quantum"] select:focus {
+      background-color: #18112E !important;
+      color: #FFFFFF !important;
+      border-color: #8B5CF6 !important;
+      box-shadow: 0 0 12px rgba(139, 92, 246, 0.4) !important;
+    }
+    html[data-theme="quantum"] .input-group-text {
+      background-color: #0E0A1A !important;
+      border-color: #2C2250 !important;
+      color: #8B5CF6 !important;
+    }
+
+    /* Light theme styling for Login & Sign-up */
+    html[data-theme="light"] .auth-box {
+      background: #FFFFFF !important;
+      border: 1px solid #CBD5E1 !important;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 0 20px rgba(2, 132, 199, 0.1) !important;
+    }
+    html[data-theme="light"] .auth-box h3 {
+      color: #0F172A !important;
+    }
+    html[data-theme="light"] .auth-box .text-secondary {
+      color: #475569 !important;
+    }
+    html[data-theme="light"] .auth-nav-tabs {
+      background: #F1F5F9 !important;
+      border: 1px solid #CBD5E1 !important;
+    }
+    html[data-theme="light"] .auth-nav-tab {
+      color: #475569 !important;
+    }
+    html[data-theme="light"] .auth-nav-tab.active {
+      background: #0284C7 !important;
+      color: #FFFFFF !important;
+      box-shadow: 0 2px 10px rgba(2, 132, 199, 0.3) !important;
+    }
+    html[data-theme="light"] .form-control,
+    html[data-theme="light"] .form-control-cyber,
+    html[data-theme="light"] input,
+    html[data-theme="light"] select {
+      background-color: #FFFFFF !important;
+      color: #0F172A !important;
+      border: 1px solid #CBD5E1 !important;
+    }
+    html[data-theme="light"] .form-control:focus,
+    html[data-theme="light"] .form-control-cyber:focus,
+    html[data-theme="light"] input:focus,
+    html[data-theme="light"] select:focus {
+      background-color: #FFFFFF !important;
+      color: #0F172A !important;
+      border-color: #0284C7 !important;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2) !important;
+      outline: none !important;
+    }
+    html[data-theme="light"] input:-webkit-autofill {
+      -webkit-text-fill-color: #0F172A !important;
+      -webkit-box-shadow: 0 0 0 1000px #FFFFFF inset !important;
+      caret-color: #0F172A !important;
+    }
+    html[data-theme="light"] .input-group-text {
+      background-color: #F8FAFC !important;
+      border-color: #CBD5E1 !important;
+      color: #0284C7 !important;
+    }
+    html[data-theme="light"] .form-label-cyber {
+      color: #334155 !important;
+    }
+    html[data-theme="light"] .verification-pill {
+      background: #F8FAFC !important;
+      border: 1px dashed #CBD5E1 !important;
+      color: #1E293B !important;
+    }
+    html[data-theme="light"] .text-muted {
+      color: #64748B !important;
+    }
+    html[data-theme="light"] .text-light,
+    html[data-theme="light"] .text-white:not(.auth-nav-tab.active):not(.btn-cyber-primary *) {
+      color: #0F172A !important;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Theme Switch Floating Button -->
+<div style="position: fixed; top: 20px; right: 24px; z-index: 1050;">
+  <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode" aria-label="Toggle Theme">
+    <i class="bi bi-sun-fill text-warning" id="themeToggleIcon"></i>
+  </button>
+</div>
+
+<div class="login-container">
+  <div class="auth-box">
+    <!-- Brand Header -->
+    <div class="text-center mb-3">
+      <div class="brand-logo-icon mx-auto mb-2" style="width: 52px; height: 52px;">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width: 30px; height: 30px;">
+          <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 2.18l7 3.12v4.7c0 4.67-3.13 9.03-7 10.18-3.87-1.15-7-5.51-7-10.18V6.3l7-3.12zm-1 5.82a3 3 0 100 6 3 3 0 000-6zm0 2a1 1 0 110 2 1 1 0 010-2zm4.71 4.29l2.58 2.59-1.42 1.41-2.58-2.58a5.006 5.006 0 01-3.29 1.29C8.46 17.5 6 15.04 6 12s2.46-5.5 5.5-5.5 5.5 2.46 5.5 5.5c0 1.25-.43 2.4-1.29 3.29z"/>
+        </svg>
+      </div>
+      <h3 class="font-heading fw-bold text-white mb-0" style="font-size: 1.4rem;">Blockchain Forensic System</h3>
+      <p class="text-secondary small mb-0">Chain-of-Custody Verification & Access Terminal</p>
+    </div>
+
+    <!-- Auth Tabs Switcher -->
+    <div class="auth-nav-tabs">
+      <button type="button" class="auth-nav-tab active" id="tabBtnLogin" onclick="switchAuthTab('login')">
+        <i class="bi bi-box-arrow-in-right me-1"></i> Terminal Login
+      </button>
+      <button type="button" class="auth-nav-tab" id="tabBtnRegister" onclick="switchAuthTab('register')">
+        <i class="bi bi-person-plus me-1"></i> Investigator Sign Up
+      </button>
+    </div>
+
+    <!-- ==================== VIEW 1: TERMINAL LOGIN ==================== -->
+    <div id="loginView">
+      <form id="loginForm" onsubmit="event.preventDefault(); submitLoginForm();">
+        <div class="mb-3">
+          <label class="form-label-cyber">Role Access Level</label>
+          <select class="form-control-cyber" id="userRole">
+            <option value="Investigator" selected>Forensic Investigator</option>
+            <option value="Administrator">Forensic Administrator</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label-cyber">Investigator Email / Identifier</label>
+          <div class="input-group">
+            <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-shield-lock"></i></span>
+            <input type="email" class="form-control form-control-cyber" id="userEmail" placeholder="lokesh.vardhan@forensics.gov" value="lokesh.vardhan@forensics.gov" required>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label-cyber d-flex justify-content-between">
+            <span>Security Passphrase</span>
+            <a href="javascript:void(0)" onclick="showToast('Password reset tokens are managed by your Security Administrator.', 'info')" class="small text-primary">Forgot Key?</a>
+          </label>
+          <div class="input-group">
+            <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-key"></i></span>
+            <input type="password" class="form-control form-control-cyber" id="userPassword" value="CyberForensics2025!" required>
+            <button class="btn btn-outline-secondary border-secondary" type="button" id="togglePasswordBtn">
+              <i class="bi bi-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-cyber-primary w-100 justify-content-center py-2 mb-3" id="btnLoginSubmit">
+          <i class="bi bi-shield-check"></i> Authenticate Session
+        </button>
+      </form>
+
+      <!-- Evaluator & Demo Access -->
+      <div class="p-3 rounded mb-3" style="background:#0D1626; border:1px solid #203650;">
+        <small class="text-muted d-block text-uppercase fw-semibold mb-2" style="font-size:0.68rem; letter-spacing:0.5px;">Quick Evaluation Demo Access</small>
+        <div class="d-flex gap-2">
+          <button type="button" class="btn btn-sm btn-cyber-outline w-100 justify-content-center" onclick="demoLogin('Investigator')">
+            <i class="bi bi-person-badge"></i> Investigator Demo
+          </button>
+          <button type="button" class="btn btn-sm btn-cyber-outline w-100 justify-content-center" onclick="demoLogin('Administrator')">
+            <i class="bi bi-person-gear"></i> Admin Demo
+          </button>
+        </div>
+      </div>
+
+      <div class="text-center pt-2 border-top border-secondary border-opacity-25">
+        <small class="text-secondary">
+          Don't have an investigator account? 
+          <a href="javascript:void(0)" onclick="switchAuthTab('register')" class="text-primary fw-semibold">Sign Up with Mobile & Email Verification</a>
+        </small>
+      </div>
+    </div>
+
+    <!-- ==================== VIEW 2: INVESTIGATOR SIGN UP ==================== -->
+    <div id="signupView" style="display: none;">
+      
+      <!-- Sign Up Step 1: Profile & Credentials -->
+      <div id="signupStep1">
+        <form id="signupDetailsForm" onsubmit="event.preventDefault(); submitSignupStep1();">
+          <div class="mb-3">
+            <label class="form-label-cyber">Full Name & Title *</label>
+            <div class="input-group">
+              <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-person"></i></span>
+              <input type="text" class="form-control form-control-cyber" id="regFullName" placeholder="e.g. Officer Rajesh Sharma" required>
+            </div>
+          </div>
+
+          <div class="row g-2 mb-3">
+            <div class="col-sm-6">
+              <label class="form-label-cyber">Agency Role *</label>
+              <select class="form-control-cyber" id="regRole" required>
+                <option value="Investigator" selected>Forensic Investigator</option>
+                <option value="Administrator">Forensic Administrator</option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label-cyber">Badge ID / Title</label>
+              <input type="text" class="form-control form-control-cyber" id="regBadge" placeholder="e.g. Incident Responder">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label-cyber">Official Email Address *</label>
+            <div class="input-group">
+              <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-envelope"></i></span>
+              <input type="email" class="form-control form-control-cyber" id="regEmail" placeholder="officer@forensics.gov" required>
+            </div>
+            <small class="text-muted" style="font-size:0.75rem;">A 6-digit cryptographic verification code will be sent to this email.</small>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label-cyber">Official Mobile / Contact Number *</label>
+            <div class="input-group">
+              <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-phone"></i></span>
+              <input type="tel" class="form-control form-control-cyber" id="regPhone" placeholder="+91 98765 43210" required>
+            </div>
+            <small class="text-muted" style="font-size:0.75rem;">A 6-digit SMS verification code will be dispatched to this number.</small>
+          </div>
+
+          <div class="row g-2 mb-4">
+            <div class="col-sm-6">
+              <label class="form-label-cyber">Security Passphrase *</label>
+              <input type="password" class="form-control form-control-cyber" id="regPassword" placeholder="Min 6 characters" minlength="6" required>
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label-cyber">Confirm Passphrase *</label>
+              <input type="password" class="form-control form-control-cyber" id="regPasswordConfirm" placeholder="Re-enter passphrase" minlength="6" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-cyber-primary w-100 justify-content-center py-2 mb-3" id="btnRequestCodes">
+            <i class="bi bi-shield-lock-fill"></i> Request Dual Verification Codes
+          </button>
+        </form>
+
+        <div class="text-center pt-2 border-top border-secondary border-opacity-25">
+          <small class="text-secondary">
+            Already have an active credential? 
+            <a href="javascript:void(0)" onclick="switchAuthTab('login')" class="text-primary fw-semibold">Sign In to Terminal</a>
+          </small>
+        </div>
+      </div>
+
+      <!-- Sign Up Step 2: Dual Verification (Email OTP & Phone OTP) -->
+      <div id="signupStep2" style="display: none;">
+        <div class="p-3 rounded mb-3" style="background:#0D1626; border:1px solid #203650;">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <i class="bi bi-shield-check text-success fs-5"></i>
+            <h6 class="text-white mb-0 fw-bold">Dual Cryptographic Verification</h6>
+          </div>
+          <p class="text-secondary small mb-2">
+            Verification codes have been dispatched to:
+            <br><span class="text-light fw-semibold" id="verifyTargetEmail">email@example.com</span>
+            <br><span class="text-light fw-semibold" id="verifyTargetPhone">+91 XXXXX XXXXX</span>
+          </p>
+
+          <!-- Simulated Dispatch Pill for Instant Testing / Offline Mode -->
+          <div class="verification-pill mt-2" id="simulatedDispatchBox">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="text-info fw-semibold small"><i class="bi bi-cpu me-1"></i> Simulated Cryptographic Dispatch:</span>
+              <button type="button" class="btn btn-sm btn-link text-primary p-0 text-decoration-none" onclick="autoFillVerificationCodes()">
+                <i class="bi bi-magic me-1"></i> Auto-Fill Codes
+              </button>
+            </div>
+            <div class="font-mono text-light small d-flex justify-content-between flex-wrap gap-2">
+              <div>Email OTP: <span class="text-success fw-bold" id="previewEmailCode">------</span></div>
+              <div>Phone OTP: <span class="text-warning fw-bold" id="previewPhoneCode">------</span></div>
+            </div>
+          </div>
+        </div>
+
+        <form id="signupVerifyForm" onsubmit="event.preventDefault(); submitSignupStep2();">
+          <!-- Email Verification Code -->
+          <div class="mb-3">
+            <label class="form-label-cyber d-flex justify-content-between align-items-center">
+              <span><i class="bi bi-envelope-check text-primary me-1"></i> 6-Digit Email Verification Code *</span>
+            </label>
+            <input type="text" class="form-control form-control-cyber otp-input-box" id="regEmailCode" placeholder="••••••" maxlength="6" pattern="[0-9]{6}" required>
+          </div>
+
+          <!-- Phone / SMS Verification Code -->
+          <div class="mb-3">
+            <label class="form-label-cyber d-flex justify-content-between align-items-center">
+              <span><i class="bi bi-phone-vibrate text-primary me-1"></i> 6-Digit Mobile / SMS Verification Code *</span>
+            </label>
+            <input type="text" class="form-control form-control-cyber otp-input-box" id="regPhoneCode" placeholder="••••••" maxlength="6" pattern="[0-9]{6}" required>
+          </div>
+
+          <div class="d-flex gap-2 mb-3">
+            <button type="button" class="btn btn-cyber-outline py-2 flex-fill" onclick="backToSignupStep1()">
+              <i class="bi bi-arrow-left"></i> Edit Info
+            </button>
+            <button type="submit" class="btn btn-cyber-primary py-2 flex-fill justify-content-center" id="btnVerifyRegister">
+              <i class="bi bi-patch-check-fill"></i> Verify & Activate
+            </button>
+          </div>
+
+          <div class="text-center">
+            <button type="button" class="btn btn-sm btn-link text-secondary text-decoration-none" id="btnResendCodes" onclick="resendVerificationCodes()">
+              <i class="bi bi-arrow-repeat me-1"></i> Resend Verification Codes
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Security Advisory Notice -->
+    <div class="text-center mt-4">
+      <small class="text-muted" style="font-size: 0.72rem; line-height: 1.4; display: block;">
+        <i class="bi bi-shield-lock text-primary me-1"></i> Authorized Digital Forensic Personnel Only. Cryptographically anchored on-chain with immutable audit tracking.
+      </small>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  // State variables for sign-up flow
+  let pendingSignupData = {};
+  let currentDemoCodes = null;
+
+  // Toggle Password Visibility in Login Form
+  const toggleBtn = document.getElementById('togglePasswordBtn');
+  const passInput = document.getElementById('userPassword');
+  if (toggleBtn && passInput) {
+    toggleBtn.addEventListener('click', () => {
+      const isPass = passInput.type === 'password';
+      passInput.type = isPass ? 'text' : 'password';
+      toggleBtn.innerHTML = isPass ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
+    });
+  }
+
+  // Switch between Login and Sign Up tabs
+  function switchAuthTab(tab) {
+    const tabLogin = document.getElementById('tabBtnLogin');
+    const tabRegister = document.getElementById('tabBtnRegister');
+    const loginView = document.getElementById('loginView');
+    const signupView = document.getElementById('signupView');
+
+    if (tab === 'login') {
+      tabLogin.classList.add('active');
+      tabRegister.classList.remove('active');
+      loginView.style.display = 'block';
+      signupView.style.display = 'none';
+    } else {
+      tabRegister.classList.add('active');
+      tabLogin.classList.remove('active');
+      loginView.style.display = 'none';
+      signupView.style.display = 'block';
+      backToSignupStep1();
+    }
+  }
+
+  // Handle Login Form Submission
+  async function submitLoginForm() {
+    const email = document.getElementById('userEmail').value;
+    const pass = document.getElementById('userPassword').value;
+    const role = document.getElementById('userRole').value;
+    const submitBtn = document.getElementById('btnLoginSubmit');
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Authenticating...';
+    }
+
+    try {
+      await handleLogin(email, pass, role);
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="bi bi-shield-check"></i> Authenticate Session';
+      }
+    }
+  }
+
+  // Handle Sign Up Step 1 (Request Verification Codes)
+  async function submitSignupStep1() {
+    const fullName = document.getElementById('regFullName').value.trim();
+    const role = document.getElementById('regRole').value;
+    const badge = document.getElementById('regBadge').value.trim() || 'Digital Forensic Specialist';
+    const email = document.getElementById('regEmail').value.trim().toLowerCase();
+    const phone = document.getElementById('regPhone').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const passwordConfirm = document.getElementById('regPasswordConfirm').value;
+    const reqBtn = document.getElementById('btnRequestCodes');
+
+    if (password !== passwordConfirm) {
+      showToast('Security Passphrases do not match. Please verify.', 'error');
+      return;
+    }
+
+    if (password.length < 6) {
+      showToast('Security Passphrase must be at least 6 characters.', 'error');
+      return;
+    }
+
+    pendingSignupData = {
+      name: fullName,
+      role: role,
+      badge: badge,
+      email: email,
+      phone_number: phone,
+      password: password
+    };
+
+    if (reqBtn) {
+      reqBtn.disabled = true;
+      reqBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Dispatching Codes...';
+    }
+
+    try {
+      const res = await sendDualVerification(email, phone);
+      if (res.success) {
+        currentDemoCodes = res.data?.demo_codes || null;
+
+        document.getElementById('verifyTargetEmail').textContent = email;
+        document.getElementById('verifyTargetPhone').textContent = phone;
+
+        if (currentDemoCodes) {
+          document.getElementById('previewEmailCode').textContent = currentDemoCodes.email_code;
+          document.getElementById('previewPhoneCode').textContent = currentDemoCodes.phone_code;
+        }
+
+        // Advance to Step 2
+        document.getElementById('signupStep1').style.display = 'none';
+        document.getElementById('signupStep2').style.display = 'block';
+
+        showToast(`Verification codes sent to ${email} and ${phone}!`, 'success');
+      } else {
+        showToast(res.message || 'Failed to dispatch verification codes.', 'error');
+      }
+    } finally {
+      if (reqBtn) {
+        reqBtn.disabled = false;
+        reqBtn.innerHTML = '<i class="bi bi-shield-lock-fill"></i> Request Dual Verification Codes';
+      }
+    }
+  }
+
+  // Auto-Fill Codes Helper
+  function autoFillVerificationCodes() {
+    if (currentDemoCodes) {
+      document.getElementById('regEmailCode').value = currentDemoCodes.email_code;
+      document.getElementById('regPhoneCode').value = currentDemoCodes.phone_code;
+      showToast('Codes auto-filled for instant verification.', 'info');
+    }
+  }
+
+  // Back to Step 1
+  function backToSignupStep1() {
+    document.getElementById('signupStep1').style.display = 'block';
+    document.getElementById('signupStep2').style.display = 'none';
+  }
+
+  // Resend Verification Codes
+  async function resendVerificationCodes() {
+    if (!pendingSignupData.email || !pendingSignupData.phone_number) {
+      backToSignupStep1();
+      return;
+    }
+    const btn = document.getElementById('btnResendCodes');
+    if (btn) btn.disabled = true;
+    showToast('Re-dispatching cryptographic verification codes...', 'info');
+
+    const res = await sendDualVerification(pendingSignupData.email, pendingSignupData.phone_number);
+    if (res.success) {
+      currentDemoCodes = res.data?.demo_codes || null;
+      if (currentDemoCodes) {
+        document.getElementById('previewEmailCode').textContent = currentDemoCodes.email_code;
+        document.getElementById('previewPhoneCode').textContent = currentDemoCodes.phone_code;
+      }
+      showToast('New verification codes dispatched!', 'success');
+    } else {
+      showToast(res.message || 'Error resending codes', 'error');
+    }
+
+    setTimeout(() => { if (btn) btn.disabled = false; }, 10000);
+  }
+
+  // Handle Sign Up Step 2 (Verify & Create Account)
+  async function submitSignupStep2() {
+    const emailCode = document.getElementById('regEmailCode').value.trim();
+    const phoneCode = document.getElementById('regPhoneCode').value.trim();
+    const verifyBtn = document.getElementById('btnVerifyRegister');
+
+    if (!emailCode || emailCode.length !== 6) {
+      showToast('Please enter the 6-digit Email verification code.', 'error');
+      return;
+    }
+    if (!phoneCode || phoneCode.length !== 6) {
+      showToast('Please enter the 6-digit Mobile verification code.', 'error');
+      return;
+    }
+
+    const payload = {
+      ...pendingSignupData,
+      email_code: emailCode,
+      phone_code: phoneCode
+    };
+
+    if (verifyBtn) {
+      verifyBtn.disabled = true;
+      verifyBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Verifying & Activating...';
+    }
+
+    try {
+      const res = await completeRegistration(payload);
+      if (!res.success) {
+        showToast(res.message || 'Verification failed. Please check the codes.', 'error');
+      }
+    } finally {
+      if (verifyBtn) {
+        verifyBtn.disabled = false;
+        verifyBtn.innerHTML = '<i class="bi bi-patch-check-fill"></i> Verify & Activate';
+      }
+    }
+  }
+</script>
+</body>
+</html>
